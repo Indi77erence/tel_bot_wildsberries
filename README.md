@@ -1,5 +1,5 @@
 # tg_bot_wildsberries
-Телеграмм-бот с возможностями узнать основную информацию о товарах с wildsberries.
+Телеграмм-бот с возможностью узнать основную информацию о товарах с wildsberries.
 
 <p align="center">
       <img src="https://static5.tgstat.ru/channels/_0/eb/ebc2de8de74a44335934a5a8c10bd221.jpg" alt="8841-carmodelbot-1623767532" border="0" width="250">
