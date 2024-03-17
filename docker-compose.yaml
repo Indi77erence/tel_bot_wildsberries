@@ -1,0 +1,45 @@
+version: '3.8'
+services:
+  bot:
+    build: .
+    container_name: 'bot'
+    command: >
+      sh -c "alembic upgrade head && python src/bot/main.py"
+    ports:
+      - 8000:8000
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - custom
+    env_file:
+      - .env
+
+
+  postgres:
+    image: postgres:15.1-alpine
+    container_name: 'postgres'
+    restart: always
+    environment:
+      PGUSER: ${DB_USER}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASS}
+      POSTGRES_DB: ${DB_HOST}
+
+    user: postgres
+    ports:
+      - 5432:5432
+    expose:
+      - 5432
+    networks:
+      - custom
+    env_file:
+      - .env
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready", "-U", "${DB_USER}", "-d", "${DB_HOST}" ]
+      interval: 10s
+      timeout: 30s
+      retries: 5
+networks:
+  custom:
+    driver: bridge
